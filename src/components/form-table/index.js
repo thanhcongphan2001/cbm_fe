@@ -1,20 +1,21 @@
-import Table from "react-bootstrap/Table";
-import Container from "react-bootstrap/Container";
-import { FetchAllUser } from "../services/UserServices";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Col from "react-bootstrap/Col";
-import Spinner from "react-bootstrap/Spinner";
-import Modal from "react-bootstrap/Modal";
+import {
+  Container,
+  Button,
+  Row,
+  Dropdown,
+  DropdownButton,
+  Form,
+  InputGroup,
+  Col,
+  Table,
+} from "react-bootstrap";
+import { FetchAllUser } from "../../services";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { Toast } from "react-bootstrap";
-function TableUsers() {
+import { FormModal } from "./../form-modal";
+import { FormGroup } from "./../form-group";
+
+export const FormTable = () => {
   const [listUsers, getListUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -121,6 +122,7 @@ function TableUsers() {
           </div>
         </Col>
       </Row>
+
       <Table striped hover>
         <thead>
           <tr>
@@ -163,8 +165,12 @@ function TableUsers() {
           )}
         </tbody>
       </Table>
+
+      
       <div className="add_value">
-        <Button variant="primary border" onClick={()=>setshowAdd(true)}>Thêm trường dữ liệu</Button>
+        <Button variant="primary border" onClick={() => setshowAdd(true)}>
+          Thêm trường dữ liệu
+        </Button>
       </div>
 
       <ReactPaginate
@@ -187,96 +193,49 @@ function TableUsers() {
         previousLabel={<>&laquo;</>}
         nextLabel={<>&raquo;</>}
       />
-      <Modal show={showDelete} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure delete</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleDelete}>
-            agree
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showEdit} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {" "}
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Tên Trường</Form.Label>
-              <Form.Control />
-            </Form.Group>
+      <FormModal
+        isVisible={showDelete}
+        onClose={handleClose}
+        onAgree={handleDelete}
+        title="Delete"
+        message="Are you sure delete"
+      />
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Tên kiểu dữ liệu</Form.Label>
-              <Form.Control />
-            </Form.Group>
+      <FormModal
+        isVisible={showEdit}
+        onClose={handleClose}
+        onAgree={handleAdd}
+        title="Edit"
+      >
+        <Form>
+          <FormGroup title="Tên Trường" controlId="formBasicEmail" />
+          <FormGroup title="Tên kiểu dữ liệ" controlId="formBasicPassword" />
+          <FormGroup title="Khóa ngoại" controlId="formBasicEmail" />
+          <FormGroup title="Quan hệ dữ liệu" controlId="formBasicEmail">
+            <Form.Select disabled>
+              <option>Một Một</option>
+            </Form.Select>
+          </FormGroup>
+        </Form>
+      </FormModal>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Khóa ngoại</Form.Label>
-              <Form.Control />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Quan hệ dữ liệu</Form.Label>
-              <Form.Select disabled>
-                <option>Một Một</option>
-              </Form.Select>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAdd}>
-            agree
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showAdd} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add field</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {" "}
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Tên Trường</Form.Label>
-              <Form.Control />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Tên kiểu dữ liệu</Form.Label>
-              <Form.Control />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Khóa ngoại</Form.Label>
-              <Form.Control />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Quan hệ dữ liệu</Form.Label>
-              <Form.Select></Form.Select>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAdd}>
-            agree
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <FormModal
+        isVisible={showAdd}
+        onClose={handleClose}
+        onAgree={handleAdd}
+        title="Add field"
+      >
+        <Form>
+          <FormGroup title="Tên Trường" controlId="formBasicEmail" />
+          <FormGroup title="Tên kiểu dữ liệ" controlId="formBasicPassword" />
+          <FormGroup title="Khóa ngoại" controlId="formBasicEmail" />
+          <FormGroup title="Quan hệ dữ liệu" controlId="formBasicEmail">
+            <Form.Select disabled>
+              <option>Một Một</option>
+            </Form.Select>
+          </FormGroup>
+        </Form>
+      </FormModal>
     </Container>
   );
-}
-
-export default TableUsers;
+};

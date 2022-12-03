@@ -1,20 +1,17 @@
-import Table from "react-bootstrap/Table";
-import Container from "react-bootstrap/Container";
-import { FetchAllUser } from "../services/UserServices";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Col from "react-bootstrap/Col";
-import Spinner from "react-bootstrap/Spinner";
-import Modal from "react-bootstrap/Modal";
+import {
+  Container,
+  Button,
+  Row,
+  Dropdown,
+  DropdownButton,
+  Form,
+  InputGroup,
+  Col,
+} from "react-bootstrap";
+import { FetchAllUser } from "../../services";
 import { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { Toast } from "react-bootstrap";
-function DataEntryForm() {
+
+export const DataEntryForm = () => {
   const [listUsers, getListUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -176,6 +173,4 @@ function DataEntryForm() {
       </Row>
     </Container>
   );
-}
-
-export default DataEntryForm;
+};
