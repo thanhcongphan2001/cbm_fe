@@ -5,8 +5,8 @@ function App() {
     <>
       <div className="app-container">
         <Home />
-        {/* <CreateDataEntryForm />
-            <DataEntryForm /> */}
+        <CreateDataEntryForm />
+        <DataEntryForm />
       </div>
     </>
   );
